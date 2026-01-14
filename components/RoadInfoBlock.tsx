@@ -35,9 +35,9 @@ const RoadInfoBlock: React.FC<RoadInfoBlockProps> = ({ block }) => {
   };
 
   return (
-    <div className="w-full h-full bg-white pt-1 px-1.5 pb-1 flex flex-col" style={{ fontFamily: 'Montserrat' }}>
+    <div className="w-full h-full bg-white pt-1 px-1.5 pb-1 flex flex-col overflow-hidden" style={{ fontFamily: 'Montserrat' }}>
       {/* Заголовок субъекта с иконкой */}
-      <div className="flex items-center gap-1 mb-[1px]">
+      <div className="flex items-center gap-1 mb-[0.5px]">
         <div className="text-[#29ABE2] flex-shrink-0 flex items-center justify-center">
           <Icon className="w-[11px] h-[11px]" strokeWidth={2.8} fill="none" />
         </div>
@@ -46,14 +46,32 @@ const RoadInfoBlock: React.FC<RoadInfoBlockProps> = ({ block }) => {
         </h1>
       </div>
       
-      {/* Описание трассы: установлена фиксированная высота строки 7.2px для максимальной плотности как в макете */}
-      <div className="text-left overflow-hidden" style={{ lineHeight: '7.2px' }}>
+      {/* Описание трассы: используем жесткий line-height и блочную модель для предотвращения раздувания интервалов на Vercel */}
+      <div 
+        className="text-left m-0 p-0 block" 
+        style={{ 
+          lineHeight: '6.8px', 
+          fontSize: '0px' // Предотвращаем влияние пробелов между инлайн-элементами
+        }}
+      >
         {roadName && (
-          <span className="text-[8.43px] font-bold text-[#2E2A6D] uppercase mr-1 inline-block align-baseline">
+          <span 
+            className="font-bold text-[#2E2A6D] uppercase mr-1 inline" 
+            style={{ 
+              fontSize: '8.43px',
+              lineHeight: '6.8px'
+            }}
+          >
             {roadName}
           </span>
         )}
-        <span className="text-[5.57px] font-medium text-black tracking-tight whitespace-pre-wrap align-baseline">
+        <span 
+          className="font-medium text-black tracking-tight whitespace-pre-wrap inline" 
+          style={{ 
+            fontSize: '5.57px',
+            lineHeight: '6.8px'
+          }}
+        >
           {formatDescription(description)}
         </span>
       </div>
